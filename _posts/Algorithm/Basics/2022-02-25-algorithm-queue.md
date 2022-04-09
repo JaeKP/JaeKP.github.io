@@ -1,0 +1,228 @@
+---
+title: Queue와 BFS
+author: 박재경
+date: 2022-02-25
+categories: [Algorithm, Basics]
+tags: [algorithm, queue, bfs]
+---
+
+
+
+# Queue
+
+> 스택과 마찬가지로 삽입과 삭제의 위치가 제한적인 자료구조이다. 선입선출법!
+>
+> {: .prompt-info }
+
+<br>
+
+## 1. Queue
+
+## 1) 기본 원리 
+
+> 큐에 삽입한 순서대로 원소가 저장되어, 가장 먼저 삽입된 원소는 가장 먼저 삭제된다. 
+
+- front: 삭제된 위치 
+- Rear: 저장된 위치
+
+<br>
+
+## 2) 기본 연산
+
+| 연산            | 기능                                                | 연산 과정             |
+| --------------- | --------------------------------------------------- | --------------------- |
+| `enQueue(item)` | 큐의 뒤쪽 (rear 다음)에 원소를 삽입하는 연산        | **rear += 1**         |
+| `deQueue()`     | 큐의 앞쪽(front)에서 원소를 삭제하고 반환하는 연산  | **front += 1**        |
+| `createQueue()` | 공백 상태의 큐를 생성하는 연산                      | **front = rear = -1** |
+| `isEmpty()`     | 큐가 공백상태인지를 확인하는 연산                   |                       |
+| `isFull()`      | 큐가 포화상태인지를 확인하는 연산                   |                       |
+| `Qpeek()`       | 큐의 앞쪽(front)에서 원소를 삭제 없이 반환하는 연산 |                       |
+
+- 상태표현
+
+  - 초기상태: front = rear= -1
+
+  - 공백상태: front = rear **(공백상태를 구분하기 위해 front가 있는 자리는 사용하지 않고 빈자리로 둔다. )**
+
+  - 포화상태 rear == N-1 (배열의 마지막 인덱스! 더이상 추가는 NO!)
+
+
+<br>
+
+```python
+# 선형 queue 구현
+def enqueue(item):
+    global rear
+    # full 인지 체크, rear == 마지막 인덱스
+    rear = rear + 1
+    Q[rear] = item
+    
+def dequeue():
+    global front
+    # empty 인지 체크  front == rear
+    front = front + 1
+    return Q[front]
+
+def isEmpty():
+    return front == rear
+
+def Fulll():
+    return rear = len(Q) - 1
+
+# 함수 사용
+for i in range(1000000):
+    enqueue(i)
+    
+while not isEmpty():
+    dequeue()
+    
+# ===============================
+# 함수를 사용하지 않는다면..
+Q = [0] * 1000000
+front = rear = -1
+
+# front가 가리키는 곳은 첫번째 요소의 앞(빈공간)
+for i in range(1000000):
+    rear += 1
+    Q[rear] = i
+    
+while front != rear:
+    front += 1
+    Q[front]
+    
+# ===============================
+# double ended queue
+from collections import deque
+from time import time
+start = time()
+
+Q = deque()
+for i in range(1000000):
+    Q.append(i)
+
+while Q:
+    Q.popleft()
+```
+
+**:pencil2:참고자료** https://docs.python.org/ko/3/library/collections.html?highlight=deque#collections.deque
+
+<br>
+
+## 2. 원형 큐
+
+> 선형큐의 경우 front를 통해 배열의 앞부분에 활용할 수 있는 공간이 있음에도 불구하고 사용할 수 없다. 
+> 이를 보완한 큐가 원형큐이다. 
+
+**1차원 배열을 사용하되, 논리적으로는 배열의 처음과 끝이 연결되어 원형 형태를 이룬다고 가정하고 사용**
+
+즉, front와 rear의 위치가 배열의 마지막 인덱스인 n-1을 가리킨 후, 그 다음에는 논리적 순환을 이루어 배열의 처음 인덱스인 0으로 이동해야 한다. 
+이를 위해 나머지 연산자 mod를 사용한다. 
+
+|        | 삽입 위치             | 삭제 위치              |
+| ------ | --------------------- | ---------------------- |
+| 선형큐 | rear = rear +1        | front = front +1       |
+| 원형큐 | rear = (rear + 1) % n | front = (front +1) % n |
+
+- 모듈러 연산 
+  - `% N`은 0 ~ N-1 범위에 있다.  
+
+- 상태표현
+  - 초기 상태: front = rear = 0 
+  - 공백 상태: front = rear
+  - 포화 상태: (rear+1) % len(q) = front
+
+<br>
+
+```python
+# 원형큐
+QSIZE = 4
+Q = [0] * QSIZE
+front = rear = 0
+
+# front가 가리키는 곳은 첫번째 요소의 앞(빈공간)
+def enqueue(item):
+    global rear
+    # full 인지 체크, front == (rear + 1) % QSIZE
+    rear = (rear + 1) % QSIZE
+    Q[rear] = item
+    
+def dequeue():
+    global front
+    # empty 인지 체크  front == rear
+    front = (front + 1) % QSIZE
+    return Q[front]
+
+def isFull():
+    return front == (rear + 1) % QSIZE
+
+def isEmpty():
+    return front == rear
+```
+
+<br>
+
+## 3. BFS
+
+> 너비우선탐색은 탐색 시작점의 인접한 정점들을 먼저 모두 차례로 방문한 후, 
+>
+> 방문했던 정점을 시작점으로 하여 다시 인접한 정점들을 차례로 방문하는 방식이다. 
+>
+> 인접한 정점들에 대해 탐색을 한 후, 차례로 다시 너비우선탐색을 진행해야 하므로, 선입선출 형태의 자료구조인 큐를 활용한다!
+
+<br>
+
+DFS와 마찬가지로 시작점에서 경로가 존재하는 모든 정점들을 방문
+
+- 경로 유무를 묻는 문제 ==> DFS, BFS로 다 가능
+- 결합 컴포넌트를 찾는 문제
+- 최단경로를 찾는 문제 => BFS로 해결한다.
+  - DFS로 풀려면 원래 알고리즘을 수정해야한다.
+
+DFS와의 차이점
+
+- DFS는 출발점에서 경로가 있는 임의 정점을 처음 방문할 때 최단으로 방문한다는 보장을 못한다.
+- BFS는 처음 방문할 때 항상 최단으로 방문한다.
+  - 그렇지만, 가중치가 부여된 그래프에서는 역시 안된다.
+
+<br>
+
+- 거리와 경로 계산
+
+```python
+def BFS(s):
+    # 초기 상태 세팅 (visit 배열 초기화, Q 생성, 시작점 enqueue)-------
+    visit = [0] * (V + 1)
+    Q = [s]
+    D[s] = 0
+    visit[s] = 1        # 시작점을 방문하고, 큐에 삽입
+    
+    D = [0] * (V + 1)  # 시작점에서 최단 거리
+    P = [0] * (V + 1)  # 최단 경로 트리(부모 저장)
+    while Q:            # 빈 큐가 아닐동안 반복
+        v = Q.pop(0)
+        for w in G[v]:  # v의 방문하지 않은 인접 정점 w을 찾는다.
+            if not visit[w]:
+                Q.append(w)
+                visit[w] = 1;
+                D[w] = D[v] + 1
+                P[w] = v
+```
+
+<br>
+
+- 방문정보와 거리를 저장하는 배열을 같이 사용
+
+```python
+def BFS(s):
+    visit = [0] * (V + 1)
+    Q = [s]
+    visit[s] = 1        # 시작점을 방문하고, 큐에 삽입
+    while Q:            # 빈 큐가 아닐동안 반복
+        v = Q.pop(0)    # v의 방문하지 않은 인접 정점 w을 찾는다.
+        for w in G[v]:
+            if not visit[w]:
+                Q.append(w)
+                visit[w] = visit[v] + 1
+```
+
+<br>
