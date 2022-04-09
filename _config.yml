@@ -26,11 +26,10 @@ title: "Hello, World!"                          # the main title
 tagline: 난 재경쓰!   # it will display as the sub-title
 
 description: >-
-  개발자-비전공자-SSAFY-TIL                        # used by seo meta and the atom feed
-  A minimal, responsive, and powerful Jekyll theme for presenting professional writing.
+  문과생의 개발자 도전기. 우선 무엇이든 기록해보자!
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: 'https://JaeKP.github.io'
+url: 'https://jaekp.github.io'
 
 github:
   username: JaeKP             # change to your github username
@@ -51,7 +50,7 @@ social:
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
 
-google_site_verification:               # fill in to your verification string
+google_site_verification: LP7vGYSUszERSVMH1MoT4NXRTCcbUaUtfFm_pOYcoQ4              # fill in to your verification string
 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
