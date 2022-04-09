@@ -5,5 +5,5 @@ order: 4
 ---
 
 > "Hello, World!"
-> {: .prompt-info }
+{: .prompt-info }
 
