@@ -26,7 +26,7 @@ title: "Hello, World!"                          # the main title
 tagline: 난 재경쓰!   # it will display as the sub-title
 
 description: >-
-  문과생의 개발자 도전기. 우선 무엇이든 기록해보자!
+  기록 보관소
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://jaekp.github.io'
