@@ -8,7 +8,7 @@ tag: [cs, 컴퓨터-구조]
 
 ### 1. 디지털 논리 회로 기초 파트 1
 
-[강의링크]((https://www.youtube.com/watch?v=SG89LOgT7Vc&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=2))
+[강의링크](https://www.youtube.com/watch?v=SG89LOgT7Vc&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=2)
 
 #### (1) 디지털 컴퓨터(Digitial Computer)
 
