@@ -5,6 +5,8 @@ date: 2022-07-01
 categories: [WEB, Vue]
 tag: [vue]
 ---
+
+
 ## 1. v-model의 변화
 
 > Vue 3에서는 혼동을 줄이고 개발자가 `v-model` 디렉티브를 보다 유연하게 사용할 수 있도록, 양방향 데이터 바인딩을 위한 API가 표준화되었다.
