@@ -1,5 +1,5 @@
 ---
-title: 0장-컴퓨터-구조-개요
+title: 컴퓨터구조-컴퓨터-구조-개요
 author: 박재경
 date: 2022-06-20
 categories: [CS, 컴퓨터-구조]

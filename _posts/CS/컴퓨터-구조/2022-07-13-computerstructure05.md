@@ -1,5 +1,5 @@
 ---
-title: 5장-기본-컴퓨터의-구조와-설계-part1
+title: 컴퓨터구조-기본-컴퓨터의-구조와-설계-part1
 author: 박재경
 date: 2022-07-13
 categories: [CS, 컴퓨터-구조]

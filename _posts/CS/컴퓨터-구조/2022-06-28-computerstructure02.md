@@ -1,5 +1,5 @@
 ---
-title: 2장-디지털-부품
+title: 컴퓨터구조-디지털-부품
 author: 박재경
 date: 2022-06-28
 categories: [CS, 컴퓨터-구조]
@@ -8,7 +8,7 @@ tag: [cs, 컴퓨터-구조]
 
 
 
-## 1. 디지털 부품 파트1
+## 디지털 부품 파트1
 
 [강의링크](https://www.youtube.com/watch?v=aj74NlGUAk4&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=4)
 
@@ -177,7 +177,7 @@ tag: [cs, 컴퓨터-구조]
 
 <br>
 
-## 2. 디지털 부품 파트 2
+## 디지털 부품 파트 2
 
 [강의링크](https://www.youtube.com/watch?v=7VPjQMeiHg0&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=5)
 

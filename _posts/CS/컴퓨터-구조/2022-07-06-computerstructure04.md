@@ -1,5 +1,5 @@
 ---
-title: 4장-레지스터-전송과-마이크로-연산
+title: 컴퓨터구조-레지스터-전송과-마이크로-연산
 author: 박재경
 date: 2022-07-06
 categories: [CS, 컴퓨터-구조]
@@ -110,6 +110,7 @@ tag: [cs, 컴퓨터-구조]
 ### 1) 산술 마이크로 연산 (Arithmetic Micro-operations)
 
 > 레지스터간 이진 정보 전송
+{: .prompt-tip }
 
 #### (1) 이진 가산기
 
@@ -140,6 +141,7 @@ tag: [cs, 컴퓨터-구조]
 ### 2) 논리 마이크로 연산 (Logic Micro-operations)
 
 > 수치 데이터에 대한 산술 연산
+{: .prompt-tip }
 
 <br>
 
@@ -150,6 +152,9 @@ tag: [cs, 컴퓨터-구조]
 ### 3) 시프트 마이크로 연산 (Shift Micro-operations)
 
 > 비수치 데이터에 대한 비트 조작 연산
+{: .prompt-tip }
+
+<br>
 
 #### (1) 논리 시프트
 

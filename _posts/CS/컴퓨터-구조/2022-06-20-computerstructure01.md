@@ -1,12 +1,12 @@
 ---
-title: 1장-디지털-논리-회로
+title: 컴퓨터구조-디지털-논리-회로
 author: 박재경
 date: 2022-06-20
 categories: [CS, 컴퓨터-구조]
 tag: [cs, 컴퓨터-구조]
 ---
 
-## 1. 디지털 논리 회로 기초 파트 1
+## 디지털 논리 회로 기초 파트 1
 
 [강의링크](https://www.youtube.com/watch?v=SG89LOgT7Vc&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=2)
 
@@ -111,7 +111,7 @@ F = ABC + ABC' + A'C = AB(C+C')+A'C
 
 ---
 
-## 2. 디지털 논리 회로 기초 파트 1
+## 디지털 논리 회로 기초 파트 2
 
 [강의링크](https://www.youtube.com/watch?v=gn5z3Un_qqM&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=3)
 

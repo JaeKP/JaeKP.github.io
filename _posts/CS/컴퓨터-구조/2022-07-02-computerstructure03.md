@@ -1,5 +1,5 @@
 ---
-title: 3장-데이터의-표현
+title: 컴퓨터구조-데이터의-표현
 author: 박재경
 date: 2022-07-02
 categories: [CS, 컴퓨터-구조]
@@ -8,7 +8,7 @@ tag: [cs, 컴퓨터-구조]
 
 
 
-## 1. 데이터의 표현 파트 1
+## 데이터의 표현 파트 1
 
 [강의링크](https://www.youtube.com/watch?v=aSocCv3SC2k&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=6)
 
@@ -95,7 +95,7 @@ tag: [cs, 컴퓨터-구조]
 
 <br>
 
-## 2. 데이터의 표현 파트 2
+## 데이터의 표현 파트 2
 
 [강의링크](https://www.youtube.com/watch?v=bysGzutpRgc&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=7)
 

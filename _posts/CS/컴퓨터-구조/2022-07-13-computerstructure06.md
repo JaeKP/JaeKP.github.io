@@ -1,5 +1,5 @@
 ---
-title: 5장-기존-컴퓨터의-구조와-설계-part2
+title: 컴퓨터구조-기존-컴퓨터의-구조와-설계-part2
 author: 박재경
 date: 2022-07-13
 categories: [CS, 컴퓨터-구조]
@@ -8,7 +8,7 @@ tag: [cs, 컴퓨터-구조]
 
 
 
-## 기본 컴퓨터의 구조와 설계 part2-1
+## 기본 컴퓨터의 구조와 설계 part2
 
 [강의 링크](https://www.youtube.com/watch?v=eoswnrO_v9g&list=PLc8fQ-m7b1hCHTT7VH2oo0Ng7Et096dYc&index=12)
 
