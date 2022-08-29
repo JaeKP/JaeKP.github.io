@@ -49,10 +49,6 @@ tag: [cs, 컴퓨터-구조]
 
 <br>
 
-![image-20220802095005843](C:/Users/user/AppData/Roaming/Typora/typora-user-images/image-20220802095005843.png)
-
-
-
 #### (1) 입출력 인터페이스의 기능
 
 - **CPU와 I/O 장치의 차이점을 해결한다.**
@@ -380,8 +376,9 @@ tag: [cs, 컴퓨터-구조]
 
 ![image-20220802194808455](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20220802194808455.png)
 
-| SYN  | SYN  | Start Of Header<br />(text에 대한 정보) | STX  | Text | ETX  | BCC<br />(text에 대한 에러 정보) |
-| ---- | ---- | --------------------------------------- | ---- | ---- | ---- | -------------------------------- |
+| SYN  | SYN  |     Start Of Header     | STX  | Text | ETX  |           BCC           |
+| :--: | :--: | :---------------------: | :--: | :--: | :--: | :---------------------: |
+|      |      | (text에 대한 에러 정보) |      |      |      | (text에 대한 에러 정보) |
 
 - 문자를 기반하는 text를 보낼 때는 위와 같은 형식으로 보내야 한다. 
 - 데이터 전송을 위한 약속이다.
