@@ -1,5 +1,5 @@
 ---
-title: 실전 웹 성능 최적화(feat. React) Part1
+title: 실전 웹 성능 최적화 (feat. React) Part1
 author: 박재경
 date: 2022-10-15
 categories: [WEB, Performance]
@@ -8,7 +8,7 @@ tag: [perfomance]
 
 [강의 링크](https://www.inflearn.com/course/%EC%9B%B9-%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94-%EB%A6%AC%EC%95%A1%ED%8A%B8-1/dashboard)
 
-웹 성능은 크게 두 가지로 분류할 수 있다. 
+**웹 성능은 크게 두 가지로 분류할 수 있다.** 
 
 바로, 로딩 성능과 렌더링 성능이다.
 
@@ -69,11 +69,13 @@ function getParametersForUnsplash({ width, height, quality, format }) {
 
 <br>
 
-만약, 이미지를 api를 통해 가져오는 경우 어떻게 해야 하는가.
+**만약, 이미지를 api를 통해 가져오는 경우 어떻게 해야 할까?**
 
 Image CDN를 사용하여 해결한다. 이미지에 전처리를 하여 사용자에게 제공한다. 
 
-일반적으로 CDN은 물리적 거리의 한계를 극복하기 위해 유저와 가까운 곳에 콘텐츠 서버를 두는 것을 의미하지만, Image CDN은 이미지를 전처리하여 사용자에게 제공하는 것을 의미한다. 실제로 브런치에서도 이미지 CDN을 활용하고 있다. 
+일반적으로 CDN은 물리적 거리의 한계를 극복하기 위해 유저와 가까운 곳에 콘텐츠 서버를 두는 것을 의미하지만, Image CDN은 이미지를 전처리하여 사용자에게 제공하는 것을 의미한다. 
+
+실제로 브런치에서도 이미지 CDN을 활용하고 있다. 
 
 ex) `http://cdn.image.com?src=[img.cdn]&width=200&height=100`
 
@@ -85,11 +87,11 @@ ex) `http://cdn.image.com?src=[img.cdn]&width=200&height=100`
 
 자바스크립트 파일이 다운로드가 된 이후부터 JS를 평가하고 코드가 실행되기 때문에, 다운로드가 걸리는 시간만큼 화면이 뜨는 시간도 오래 걸리게 된다. 
 
-번들 analyzer를 통해 번들 파일을 분석하여 볼 수 있다. 
+**번들 analyzer를 통해 번들 파일을 분석할 수 있다.** 
 
-- https://www.npmjs.com/package/webpack-bundle-analyzer
+- [WebpackBundleAnalyzer](https://www.npmjs.com/package/webpack-bundle-analyzer)
 
-- CRA를 사용하는 경우: https://www.npmjs.com/package/cra-bundle-analyzer
+- [CRA를 사용하는 경우](https://www.npmjs.com/package/cra-bundle-analyzer)
 
 <br>
 
@@ -102,15 +104,11 @@ ex) `http://cdn.image.com?src=[img.cdn]&width=200&height=100`
 
 <br>
 
-페이지 별로 코드를 분할하거나 모듈 별로 코드를 분할할 수 있다. 
+**즉, 페이지 별로 코드를 분할하거나 모듈 별로 코드를 분할할 수 있다.** 
 
 여기서 중요한 것은, 불필요한 코드 또는 중복되는 코드가 없이 적절한 사이즈의 코드가 적절한 타이밍에 로드될 수 있도록 하는 것이다.
 
 [리액트 공식 문서](https://ko.reactjs.org/docs/code-splitting.html) / [webpack 공식 문서](https://webpack.js.org/guides/code-splitting/#root)
-
-리액트 공식 문서의 Route-based Code Splitting을 참고할 수 있다. 
-
-<br>
 
 ```javascript
 //* lazyloading과 Suspense를 활용하여 성능을 개선한다. 
@@ -152,7 +150,7 @@ export default App;
 
 ![image-20221015163924160](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20221015163924160.png)
 
-웹 페이지를 로드할 때는 html, js, css와 같은 텍스트들로 이루어진 리소스를 다운 받는다. 해당 문서의 사이즈를 줄이면 당연히, 로딩 성능이 개선된다. 
+웹 페이지를 로드할 때는 html, js, css와 같은 텍스트들로 이루어진 리소스를 다운 받는다. **해당 문서의 사이즈를 줄이면 당연히 로딩 성능이 개선된다.** 
 
 텍스트 압축이란 말 그대로 서버에서 보내는 리소스를 압축해서 보낸다. 네트워크 탭을 통해 압축을 하고 있는지 확인 할 수 있다. 
 
@@ -179,9 +177,11 @@ export default App;
 
 ![image-20221015154241800](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20221015154241800.png)
 
-Perfomance 탭을 보면 Article이 굉장히 오랫동안 렌더링 되는 것을 알 수 있다. 
+**Perfomance 탭을 보면 Article이 굉장히 오랫동안 렌더링 되는 것을 알 수 있다.** 
 
-이는 아래에 있는 `removeSpecialCharacter`함수 때문으로 보이기 때문에 해당 로직을 수정하면 해결된다. 
+이는 아래에 있는 `removeSpecialCharacter`함수가 원인으로 보이기 때문에 해당 로직을 수정하면 해결된다. 
+
+로직을 효율적으로 작성하고 작업하는 양을 줄여 아래와 같이 성능을 개선할 수 있다. 
 
 <br>
 
@@ -221,8 +221,6 @@ function removeSpecialCharacter(str) {
 }
 ```
 
-- 로직을 효율적으로 작성하고 작업하는 양을 줄여 성능을 개선했다. 
-
 <br>
 
 # 2. 통계사이트 최적화
@@ -231,14 +229,14 @@ function removeSpecialCharacter(str) {
 
 `렌더링 성능 최적화`
 
-애니메이션은 여러 장의 이미지가 반복적으로 바뀌면서 움직이는 것처럼 보이는 트릭이다. 그런데, 중간의 프레임이 누실되면 뭔가 중간에 뚝 끊기는 느낌이 든다. 
+애니메이션은 여러 장의 이미지가 반복적으로 바뀌면서 움직이는 것처럼 보이는 트릭이다. 그런데, 중간의 프레임이 유실되면 뭔가 중간에 뚝 끊기는 느낌이 든다. 
 
 - Display: 일반적으로 초당 60Frame이다. 일초에 60개의 화면을 보여준다.
 - 브라우저도 초당 60Frame으로 화면을 랜더링 하려고 한다.
-  - 그러나, 브라우저가 초당 60Frame의 화면을 그리지 못하기 때문에 애니메이션이 버벅이게 보이는 것이다.
+  - **그러나, 브라우저가 초당 60Frame의 화면을 그리지 못하기 때문에 애니메이션이 버벅이게 보이는 것이다.**
   - `쟁크 현상`: 애니메이션이 버벅이는 현상
 
-그렇다면, 왜 브라우저가 60Frame으로 그리지 못하는 가.
+그렇다면, 왜 브라우저가 60Frame으로 그리지 못하는 걸까? 이를 위해서는 브라우저 렌더링 과정에 대해서 알아야 한다. 
 
 <br>
 
@@ -267,11 +265,9 @@ function removeSpecialCharacter(str) {
 
 <br>
 
-만약, 이렇게 완성된 화면에서 일부 스타일이 변경된다면 변화된 내용을 가지고 다시 DOM, CSSOM을 만들고 일련의 과정을 진행하게 된다.
+**만약, 이렇게 완성된 화면에서 일부 스타일이 변경된다면 변화된 내용을 가지고 다시 DOM, CSSOM을 만들고 렌더링 과정을 다시 진행하게 된다.**
 
-![image-20221015173511683](../AppData/Roaming/Typora/typora-user-images/image-20221015173511683.png)
-
-그래서 애니메이션 관점에서는 초당 60Frame (0.016초)안에 화면을 재빠르게 보여주어야 하는데, 이런 짧은 시간에 위의 과정을 진행하다보니 일부 Frame이 유실 되는 것이다. 
+초당 60Frame (0.016초)안에 화면을 재빠르게 보여주어야 하는데,  짧은 시간에 렌더링을 다시 진행하여 일부 Frame이 유실 되는 것이다. 
 
 <br>
 
@@ -285,7 +281,7 @@ function removeSpecialCharacter(str) {
 
 <br>
 
-그런데, GPU의 도움을 받아 Reflow와 Repaint를 피할 수 있다. 
+**GPU의 도움을 받아 Reflow와 Repaint를 피할 수 있다.** 
 
 - transform, opacity를 변경 하면, Layout과 Paint가 생략된 `Pixel Pipeline`을 다시 실행한다. 
 
@@ -336,15 +332,13 @@ const BarGraph = styled.div`
 
 ![image-20221015175331493](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20221015175331493.png)
 
-- Gallery 모듈은 모달이 보일때만 사용하는 모듈이기 때문에 처음에 로드할 필요가 없다. 
+Gallery 모듈은 모달이 보일때만 사용하는 모듈이기 때문에 처음에 로드할 필요가 없다. ImageModal을 레이지 로드하면, 아래의 이미지와 같이 분리된다. 
+
+**로딩속도나 자바스크립트 평가 속도가 빨라져서 더 빠르게 화면을 render할 수 있다.**
 
 <br>
 
-ImageModal을 레이지 로드하면, 다음과 같이 분리된다. 
-
 ![image-20221015175910293](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20221015175910293.png)
-
-- 로딩속도나 자바스크립트 평가 속도가 빨라져서 더 빠르게 화면을 render할 수 있다.
 
 <br>
 
@@ -356,7 +350,7 @@ ImageModal을 레이지 로드하면, 다음과 같이 분리된다.
 
 즉, 최초 페이지에서는 성능이 좋아졌지만 모달에서는 성능이 나빠졌다. 
 
-그래서 Preloading을 통해 버튼을 클릭하여 모달을 열기 전에 미리 모달과 관련된 코드를 load를 한다.
+**그래서 Preloading을 통해 버튼을 클릭하여 모달을 열기 전에 미리 모달과 관련된 코드를 load를 할 수 있다.**
 
 문제는 사용자가 버튼을 언제 클릭할 지 모르기 때문에 언제 미리 로딩할 지 모른다. 그래서 컴포넌트를 Preloading하는 타이밍은 총 두 가지로 나눌 수 있다.
 
@@ -410,7 +404,7 @@ const LazyImageModal = lazyWithPreload(() => import("./components/ImageModal"));
 
 이미지는 이미지를 화면에 노출하는 시점이 아니면, 로드 하지 않는다.
 
-대신 JS의 `image 객체`를 사용하면 미리 로딩할 수 있다. 
+**대신 JS의 `image 객체`를 사용하면 미리 로딩할 수 있다.** 
 
 <br>
 
