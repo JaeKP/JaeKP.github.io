@@ -1,5 +1,5 @@
 ---
-title: 실전 웹 성능 최적화 (feat. React) Part1
+title: 실전-웹-성능-최적화-(feat. React)-Part1
 author: 박재경
 date: 2022-10-15
 categories: [WEB, Performance]
