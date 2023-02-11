@@ -1,0 +1,881 @@
+<!DOCTYPE html><html lang="ko" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.2" /><meta property="og:title" content="08-Redux와-RTK" /><meta name="author" content="박재경" /><meta property="og:locale" content="ko" /><meta name="description" content="강의 링크" /><meta property="og:description" content="강의 링크" /><link rel="canonical" href="https://jaekp.github.io/posts/react08/" /><meta property="og:url" content="https://jaekp.github.io/posts/react08/" /><meta property="og:site_name" content="Hello, World!" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-09-11T00:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="08-Redux와-RTK" /><meta name="google-site-verification" content="LP7vGYSUszERSVMH1MoT4NXRTCcbUaUtfFm_pOYcoQ4" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박재경"},"dateModified":"2022-09-11T00:00:00+09:00","datePublished":"2022-09-11T00:00:00+09:00","description":"강의 링크","headline":"08-Redux와-RTK","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaekp.github.io/posts/react08/"},"url":"https://jaekp.github.io/posts/react08/"}</script><title>08-Redux와-RTK | Hello, World!</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Hello, World!"><meta name="application-name" content="Hello, World!"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/mococo.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Hello, World!</a></div><div class="site-subtitle font-italic">난 재경쓰!</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/JaeKP" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['jkp71192','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>08-Redux와-RTK</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>08-Redux와-RTK</h1><div class="post-meta text-muted"><div> By <em> 박재경 </em></div><div class="d-flex"><div> <span> Posted <em class="timeago" data-ts="1662822000" data-toggle="tooltip" data-placement="bottom" data-tooltip-df="llll" > 2022-09-11 </em> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="4235 words"> <em>23 min</em> read</span></div></div></div><div class="post-content"><p><a href="https://www.udemy.com/course/best-react">강의 링크</a></p><hr /><h2 id="1-redux란"><span class="mr-2">1. Redux란</span><a href="#1-redux란" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><h3 id="1-정의"><span class="mr-2">1) 정의</span><a href="#1-정의" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><blockquote class="prompt-tip"><div><p>React의 상태 관리 시스템이다.</p></div></blockquote><p>React의 상태는 세 가지 이다.</p><ul><li>로컬 상태: 하나의 컴포넌트와 연결된 State<ul><li>useState를 사용하여 컴포넌트 안에서 로컬 상태를 관리한다.</ul><li>크로스 컴포넌트 상태: 다수의 컴포넌트에 영향을 미치는 State<ul><li>props체인을 구축하여 컴포넌트 간 State를 통신한다.</ul><li>앱 와이드 상태: 애플리케이션의 모든 컴포넌트에 영향을 미치는 State</ul><p>리액트 Context를 통해 크로스 컴포넌트 상태나 앱 와이드 상태를 쉽게 관리하도록 한다. 리덕스도 마찬가지이다.</p><p><strong>모든 상태 변경은 Store에서 관리하며 Store의 상태를 변경하는 유일한 방법을 Action객체를 전달하는 방법 뿐이다. 그러므로 예측 불가능한 상태 변경이 발생하는 것을 막을 수 있다.</strong></p><p>Action은 엄격한 순서에 의해 동기적으로 실행되므로 관리가 용이하다. 또한, Action객체는 자바스크립트의 객체이므로 기로깅 가능하고 시리얼라이즈 할 수 있다는 특징이 있다.</p><p><br /></p><h3 id="2-필요성"><span class="mr-2">2) 필요성</span><a href="#2-필요성" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><p>리액트 Context에는 잠재적인 단점이 있다.</p><ul><li>대형 프로젝트의 경우 상태관리가 매우 복잡하다. 다음과 같은 코드가 나올 수도 있다.</ul><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="c1">// 다양하고 많은 ContextProvider가 구축된다. </span>
+<span class="k">return</span> <span class="p">(</span>
+  <span class="p">&lt;</span><span class="nc">AuthContextProvider</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">ThemeContextProvider</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">MultiStepFormContextProvider</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">MYserRegistration</span> <span class="p">/&gt;</span>  
+      <span class="p">&lt;/</span><span class="nc">MultiStepFormContextProvider</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">ThemeContextProvider</span><span class="p">&gt;</span>  
+  <span class="p">&lt;/</span><span class="nc">AuthContextProvider</span><span class="p">&gt;</span>
+<span class="p">)</span>
+</pre></table></code></div></div><ul><li>하나의 컨텍스트만 사용한다 하더라도, <code class="language-plaintext highlighter-rouge">ContextProvider</code>컴포넌트 하나가 다양하고 많은 것을 관리해야 하기 때문에 그 자체를 유지하기가 어려울 수 있다.<li>데이터가 자주 변경되는 경우, 성능이 좋지 않다. 반면에 리덕스는 유동적인 상태 관리 라이브러리이다.</ul><p><br /></p><h3 id="3-작동-방식"><span class="mr-2">3) 작동 방식</span><a href="#3-작동-방식" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><blockquote class="prompt-tip"><div><p>리덕스는 하나의 중앙 데이터(상태) 저장소 이다.</p></div></blockquote><p>한 저장소에 전체 애플리케이션의 모든 상태를 저장한다. 그럼에도 관리가 쉬운 이유는 저장소 전체를 항상 직접 관리할 필요가 없기 때문이다.</p><p><br /></p><p><img data-src="https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20220911173912541.png" alt="image-20220911173912541" data-proofer-ignore></p><ul><li>컴포넌트가 저장소를 <strong>구독</strong>하고 데이터가 변경될 때마다 Store가 컴포넌트에 알려준다. 그러면 컴포넌트는 필요한 데이터를 받게 된다.<li>여기서 중요한 규칙이 있다. 절대로 저장된 데이터를 <strong>직접 조작하지 않는다.</strong> 데이터는 절대로 반대 방향으로 흐르지 않는다.<li>리듀서 함수가 저장소 데이터의 업데이트를 담당한다. 리듀서가 해야하는 작업을 <strong>액션</strong>이라고 부르며, 컴포넌트가 특정 액션객체를 dispatch한다.<li>action을 전달받은 reducer는 상태를 수정하여 Store를 업데이트 한다.</ul><p>즉, 직접 업데이트 하지 않고, 액션에는 수행해야 할 작업이 설명되어 있고 이 액션들을 리듀서로 전달해서 리듀서가 수행한다.</p><p>그 후, 리듀서는 새로운 상태를 도출하고 이것이 중앙 데이터 저장소의 기존 상태를 대체하게 된다. 데이터 저장소의 상태가 업데이트 되면 구독중인 컴포넌트가 알림을 받게 되어 컴포넌트를 업데이트하게 되는 것이다.</p><p><br /></p><h2 id="2-redux-기초"><span class="mr-2">2. Redux 기초</span><a href="#2-redux-기초" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><h3 id="1-redux-메서드"><span class="mr-2">1) Redux 메서드</span><a href="#1-redux-메서드" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="nv">$ </span>npm <span class="nb">install </span>redux react-redux
+</pre></table></code></div></div><div class="language-typescript highlighter-rouge"><div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre><td class="rouge-code"><pre><span class="kr">interface</span> <span class="nx">Store</span> <span class="p">{</span>
+   <span class="nx">getState</span><span class="p">():</span> <span class="nx">State</span><span class="p">;</span>
+   <span class="nx">dispatch</span><span class="p">(</span><span class="nx">action</span><span class="p">:</span> <span class="nx">Action</span><span class="p">):</span> <span class="nx">Dispatch</span><span class="p">;</span>
+   <span class="nx">subscribe</span><span class="p">(</span><span class="nx">listener</span><span class="p">:</span> <span class="nx">Listener</span><span class="p">):</span> <span class="nx">Unsubscribe</span><span class="p">;</span>
+   <span class="nx">replaceReducer</span><span class="p">(</span><span class="nx">nextReducer</span><span class="p">:</span> <span class="nx">Reducer</span><span class="p">):</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// redux의 주요 메서드를 직접 구현해보기 </span>
+<span class="kd">const</span> <span class="nx">createStore</span> <span class="o">=</span> <span class="p">(</span><span class="nx">reducer</span><span class="p">,</span> <span class="nx">preloadedState</span><span class="p">,</span> <span class="nx">enhancer</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">reducer</span> <span class="o">||</span> <span class="k">typeof</span> <span class="nx">reducer</span> <span class="o">!==</span> <span class="dl">"</span><span class="s2">function</span><span class="dl">"</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">...</span><span class="dl">"</span><span class="p">)</span>
+    
+   
+  <span class="c1">// 외부에서 접근이 불가능한 상태</span>
+  <span class="kd">let</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">preloadedState</span> <span class="o">??</span> <span class="p">{};</span>
+  <span class="kd">const</span> <span class="nx">listeners</span> <span class="o">=</span> <span class="p">[];</span>
+    
+  <span class="kd">const</span> <span class="nx">getState</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">;</span>
+    
+  <span class="c1">// reducer를 통해서만 state를 업데이트 한다. </span>
+  <span class="kd">const</span> <span class="nx">dispatch</span> <span class="o">=</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="dl">"</span><span class="s2">type</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">action</span><span class="p">))</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="p">(</span><span class="dl">"</span><span class="s2">...</span><span class="dl">"</span><span class="p">);</span> 
+    
+    <span class="nx">state</span> <span class="o">=</span> <span class="nx">reducer</span><span class="p">(</span><span class="nx">getState</span><span class="p">(),</span> <span class="nx">action</span><span class="p">);</span>
+    <span class="nx">listeners</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">listener</span> <span class="o">=&gt;</span> <span class="nx">listener</span><span class="p">());</span>
+  <span class="p">}</span>
+  
+  <span class="kd">const</span> <span class="nx">subscribe</span> <span class="o">=</span> <span class="p">(</span><span class="nx">listener</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">listeners</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">listener</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="kd">function</span> <span class="nx">unscribe</span><span class="p">()</span> <span class="p">{</span>
+          <span class="nx">listeners</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">l</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="k">is</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">listener</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  
+
+  <span class="c1">// store 객체를 반환한다. </span>
+  <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">getState</span><span class="p">,</span>
+      <span class="nx">dispatch</span>  
+      <span class="nx">subscribe</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></table></code></div></div><div class="table-wrapper"><table><thead><tr><th>메서드<th>설명<tbody><tr><td>const store = redux.createStore(reducer, [초기 상태])<td>store와 reducer를 연결하여 store를 생성한다.<br />store객체를 반환한다.store는 앱의 전체 상태를 가지고 있는 객체이다. <br />이 객체의 상태를 바꾸는 유일한 방법은 action을 보내는 것이다. <br />UI를 업데이트 하기위해 상태를 구독할 수도 있다.<tr><td>store.getState()<td>현재 State를 가져온다.<tr><td>store.subscribe(listener)<td>변경사항에 대한 리스터를 추가한다. <br />구독을 취소하는 함수를 반환한다. <br />리스너는 State가 변경될 때 호출된다. <br />콜백 안에서 현재 상태 트리를 읽으려면 getState()를 호출하면 된다.<tr><td>store.dispatch(action)<td>리듀서에 action을 보낸다.</table></div><p><br /></p><h3 id="2-시작-하기"><span class="mr-2">2) 시작 하기</span><a href="#2-시작-하기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-javascript highlighter-rouge"><div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre><td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">redux</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">redux</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// 새로운 상태 스냅샷을 도출하는 리듀서 함수</span>
+<span class="c1">// 인자로 oldState와 DispatchedAction을 받는다.</span>
+<span class="c1">// 최초 실행시, state의 값이 있게 하기 위해 기본값이 필요하다. </span>
+<span class="c1">// 새로운 State 객체를 return 한다. </span>
+<span class="kd">const</span> <span class="nx">counterReducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span><span class="na">counter</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">increment</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+  
+  <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">decrement</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+    
+  <span class="k">return</span> <span class="nx">state</span>
+<span class="p">};</span>
+
+      
+<span class="c1">// 저장소를 생성하는 메서드</span>
+<span class="c1">// 어떤 reducer가 해당 저장소의 데이터를 조작하는 지 기입한다. </span>
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">redux</span><span class="p">.</span><span class="nx">createStore</span><span class="p">(</span><span class="nx">counterReducer</span><span class="p">);</span>
+
+
+<span class="c1">// getState()는 createState()로 생성된 저장소에서 사용할 수 있는 메서드 이다. </span>
+<span class="c1">// 업데이트 후에 최신 스냅샷을 제공한다. </span>
+<span class="kd">const</span> <span class="nx">counterSubscriber</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">latestState</span> <span class="o">=</span> <span class="nx">store</span><span class="p">.</span><span class="nx">getState</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">latestState</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Redux가 구독 함수를 인식하고 상태가 변경할 떄 마다 해당 함수를 실행하라고 알려준다. </span>
+<span class="c1">// subscribe(listener) =&gt; unsubscribe</span>
+<span class="nx">store</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">counterSubscriber</span><span class="p">);</span>
+
+
+<span class="c1">// action을 발송한다. </span>
+<span class="nx">store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">({</span><span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">increment</span><span class="dl">"</span><span class="p">})</span>
+<span class="nx">sotre</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">({</span><span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">decrement</span><span class="dl">"</span><span class="p">})</span>
+</pre></table></code></div></div><ul><li>리듀서 함수는 순수 함수여야 한다.<ul><li>순수 함수: 동일한 인자가 주어졌을 때 항상 동일한 결과를 반환하고 외부의 상태를 변경하지 않는다.<li>즉, 순수 함수는 함수 내 변수 외에 외부 값을 참조, 의존하거나 변경하지 않아야 한다.</ul><li>Redux의 State는 불변해야 한다. 즉 State가 수정되서는 안되기 때문에 순수 함수여야 하는 것이다.<ul><li>인자로 들어온 State를 수정하지 않고, State를 새로 할당하는 이유이다.<li>이전의 State와 다른 주소 값을 가지고 있기 때문에 State가 변경되었다고 판단하는 것이다.</ul></ul><p><br /></p><div class="language-js highlighter-rouge"><div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="c1">// 순수 함수</span>
+<span class="kd">function</span> <span class="nx">double</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="nx">z</span><span class="o">*</span><span class="nx">z</span>
+<span class="p">}</span>
+
+<span class="c1">// 순수 함수</span>
+<span class="kd">const</span> <span class="nx">squareAll</span> <span class="o">=</span> <span class="p">(</span><span class="nx">items</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">items</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">square</span><span class="p">);</span>
+
+<span class="c1">// 비순수 함수</span>
+<span class="kd">function</span> <span class="nx">double</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">fetchUpdate</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="c1">// side effect: 부수 효과</span>
+  <span class="k">return</span> <span class="nx">z</span> <span class="o">*</span> <span class="nx">z</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><br /></p><h3 id="3-예시"><span class="mr-2">3) 예시</span><a href="#3-예시" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><p>✅ <strong>Store 생성한다.</strong></p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre><td class="rouge-code"><pre><span class="c1">// src/store/index.js</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">redux</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">counterReducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span> <span class="na">counter</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">increment</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">decrement</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">state</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span><span class="nx">counterReducer</span><span class="p">);</span>
+
+<span class="c1">// store를 내보낸다. </span>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">store</span><span class="p">;</span>
+</pre></table></code></div></div><ul><li><code class="language-plaintext highlighter-rouge">reducer(prevState, actionObject){}</code>: 이전 State와 action객체를 인자로 받는다.<li>action을 식별하기 위해 type 속성을 사용한다.</ul><p><br /></p><p>✅ <strong>Store 앱과 연결한다.</strong></p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="c1">// src/index.js</span>
+
+<span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">ReactDOM</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-dom/client</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Provider</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="dl">'</span><span class="s1">./index.css</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./App</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">store</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./store/index</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">root</span> <span class="o">=</span> <span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">createRoot</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">root</span><span class="dl">'</span><span class="p">));</span>
+<span class="nx">root</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="p">&lt;</span><span class="nc">Provider</span> <span class="na">store</span><span class="p">=</span><span class="si">{</span><span class="nx">store</span><span class="si">}</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">App</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nc">Provider</span><span class="p">&gt;</span>
+<span class="p">);</span>
+</pre></table></code></div></div><ul><li>래핑된 컴포넌트만이 리덕스에 접근할 수 있다.<ul><li>래핑된 컴포넌트의 자식. 자손 컴포넌트도 접근이 가능하다.</ul></ul><p><br /></p><p>✅ <strong>컴포넌트에서 Store에 있는 State를 구독한다.</strong></p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="c1">// src/components/counter.js</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">useSelector</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// 구독</span>
+<span class="kd">const</span> <span class="nx">Counter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nx">useSelector</span><span class="p">(</span><span class="nx">state</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">counter</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Counter</span><span class="p">;</span>
+</pre></table></code></div></div><ul><li><code class="language-plaintext highlighter-rouge">useStore</code>: 스토어에 바로 접근한다.<li><code class="language-plaintext highlighter-rouge">useSelector</code>: 자동으로 스토어가 관리하는 상태를 일부 선택하게 한다.<ul><li>전체 상태 객체에서 일부만 받을 수 있다.</ul><li>컴포넌트가 스토어의 특정 State에 구독 =&gt; 스토어가 업데이트 되면 자동으로 컴포넌트도 업데이트 된다.</ul><p><br /></p><p>✅ <strong>Store에 있는 State를 업데이트 하기 위해 action을 dispatch 한다.</strong></p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre><span class="c1">// src/components/counter.js</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">useSelector</span><span class="p">,</span> <span class="nx">useDispatch</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Counter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">dispatch</span> <span class="o">=</span> <span class="nx">useDispatch</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nx">useSelector</span><span class="p">(</span><span class="nx">state</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">incrementHandler</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">dispatch</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">increment</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">decrementHandler</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">dispatch</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">decrement</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">counter</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">incrementHandler</span><span class="si">}</span><span class="p">&gt;</span>Increment<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">decrementHandler</span><span class="si">}</span><span class="p">&gt;</span>Decrement<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Counter</span><span class="p">;</span>
+</pre></table></code></div></div><ul><li>useDispatch: 실행할 수 있는 dispatch function을 반환한다.<li>dispatch함수를 통해 action객체를 리듀서에 전달한다.</ul><p><br /></p><h3 id="4-action에-페이로드-연결하기"><span class="mr-2">4) action에 페이로드 연결하기</span><a href="#4-action에-페이로드-연결하기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="c1">// src/store/index.js</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">redux</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">initialState</span> <span class="o">=</span> <span class="p">{</span> <span class="na">counter</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">showCounter</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">counterReducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  
+  <span class="c1">// payload를 사용하여 코드의 중복을 막는다. </span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">increase</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    
+   <span class="c1">// 새로운 state객체를 반환한다. </span>
+   <span class="k">return</span> <span class="p">{</span>
+      <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="nx">action</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span>
+      <span class="na">showCounter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">showCounter</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+ 
+  <span class="k">if</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">toggle</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">showCounter</span><span class="p">:</span> <span class="o">!</span><span class="nx">state</span><span class="p">.</span><span class="nx">showCounter</span><span class="p">,</span>
+      <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">state</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span><span class="nx">counterReducer</span><span class="p">);</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">store</span><span class="p">;</span>
+</pre></table></code></div></div><ul><li>중요한 것은 기존 state와 병합되지 않고 기존 state를 덮어쓴다는 것이다.<li>원본의 state를 절대 변경해서는 안된다. 새로운 state객체를 반환하여 재정의해야 한다.<li>절대 기존의 객체 속성이 변경되게 해서는 안된다.</ul><p><br /></p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre><td class="rouge-code"><pre><span class="c1">// src/components/counter.js</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">useSelector</span><span class="p">,</span> <span class="nx">useDispatch</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Counter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">dispatch</span> <span class="o">=</span> <span class="nx">useDispatch</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nx">useSelector</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">show</span> <span class="o">=</span> <span class="nx">useSelector</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">.</span><span class="nx">showCounter</span><span class="p">);</span>
+
+  <span class="c1">// payload를 전달한다. </span>
+  <span class="kd">const</span> <span class="nx">increaseHandler</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">dispatch</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">increase</span><span class="dl">'</span><span class="p">,</span> <span class="na">amount</span><span class="p">:</span> <span class="mi">10</span> <span class="p">});</span>
+  <span class="p">};</span>
+    
+  <span class="kd">const</span> <span class="nx">toggleCounterHandler</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">dispatch</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">toggle</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="nx">show</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">counter</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">}</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">increaseHandler</span><span class="si">}</span><span class="p">&gt;</span>Increment<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">toggleCounterHandler</span><span class="si">}</span><span class="p">&gt;</span>Toggle Counter<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Counter</span><span class="p">;</span>
+</pre></table></code></div></div><ul><li>payload를 전달하여 리듀서 함수를 좀 더 간편하게 사용할 수 있다.</ul><p><br /></p><h2 id="3-redux-toolkit"><span class="mr-2">3. Redux Toolkit</span><a href="#3-redux-toolkit" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><blockquote class="prompt-tip"><div><p>리덕스를 더 쉽고 편리하게 사용할 수 있게 하는 추가 패키지이다.</p></div></blockquote><p><a href="https://redux-toolkit.js.org/">공식 문서</a></p><h3 id="1-필요성"><span class="mr-2">1) 필요성</span><a href="#1-필요성" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><ul><li>프로젝트 규모가 더 커지면 리덕스에서 관리해야 하는 상태가 많아져 복잡해진다.<ul><li><code class="language-plaintext highlighter-rouge">action</code> 타입이 너무 다양져서 관리가 어렵다.<li>상태 객체가 너무 커진다. (ActionType, ActionCreator, Reducer 등.. )</ul><li>리덕스는 항상 새로운 상태를 반환해야 하는데 상태에 중첩된 데이터가 많아 복잡할 경우 관리가 어렵다.</ul><p><br /></p><h3 id="2-메서드"><span class="mr-2">2) 메서드</span><a href="#2-메서드" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-javascript highlighter-rouge"><div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+</pre><td class="rouge-code"><pre><span class="c1">// 1. createAction</span>
+<span class="kd">function</span> <span class="nx">createAction</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">prepareFn</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">action</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">type</span> <span class="p">};</span>
+  <span class="kd">const</span> <span class="nx">actionCreator</span> <span class="o">=</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">preapreAction</span> <span class="o">=</span> <span class="nx">prepareFn</span><span class="p">?.(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">??</span> <span class="p">{};</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="p">...</span><span class="nx">action</span><span class="p">,</span> <span class="p">...</span><span class="nx">preapreAction</span> <span class="p">};</span>
+  <span class="p">};</span>
+  <span class="nx">actionCreator</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">type</span><span class="p">;</span>
+  <span class="nx">actionCreator</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">type</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">actionCreator</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createAction</span><span class="p">;</span>
+
+
+<span class="c1">// 예시: no RTK </span>
+<span class="kd">const</span> <span class="nx">INCREASE_NUMBER</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">counter/increase</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">increaseNumber</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+   <span class="na">type</span><span class="p">:</span> <span class="nx">INCREASE_NUMBER</span><span class="p">,</span>
+   <span class="nx">payload</span>
+<span class="p">})</span>
+
+<span class="c1">// 예시: RTK</span>
+<span class="c1">// createAction을 사용하면 type, action 정의를 간편히 할 수 있다. </span>
+<span class="kd">const</span> <span class="nx">increaseNumber</span> <span class="o">=</span> <span class="nx">createAction</span><span class="p">(</span><span class="dl">"</span><span class="s2">counter/increase</span><span class="dl">"</span><span class="p">);</span>
+
+
+<span class="c1">//2. createReducer</span>
+<span class="kd">function</span> <span class="nx">createReducer</span><span class="p">(</span><span class="nx">initialState</span><span class="p">,</span> <span class="nx">reducers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">combinedReducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">reducersPathValue</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">entries</span><span class="p">(</span><span class="nx">reducers</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">reducersPathValue</span><span class="p">.</span><span class="nx">findIndex</span><span class="p">(</span>
+      <span class="p">([</span><span class="nx">reducerPath</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">reducerPath</span> <span class="o">===</span> <span class="nx">action</span><span class="p">.</span><span class="nx">type</span>
+    <span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">reducer</span> <span class="o">=</span> <span class="nx">reducersPathValue</span><span class="p">[</span><span class="nx">index</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
+      <span class="k">return</span> <span class="nx">reducer</span><span class="p">(</span><span class="nx">state</span><span class="p">[</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">],</span> <span class="nx">action</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">state</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="k">return</span> <span class="nx">combinedReducer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createReducer</span><span class="p">;</span>
+
+<span class="c1">// 예시</span>
+<span class="kd">const</span> <span class="nx">counterReducer</span> <span class="o">=</span> <span class="nx">createReducer</span><span class="p">(</span>
+  <span class="c1">// 초기 값</span>
+  <span class="p">{</span><span class="na">counter</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+  
+  <span class="c1">// reducer 함수 객체</span>
+  <span class="p">{</span>
+    <span class="p">[</span><span class="nx">increase</span><span class="p">.</span><span class="nx">type</span><span class="p">]:</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span><span class="o">=&gt;</span> <span class="p">{</span>
+       <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">=</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="p">)</span>
+
+
+<span class="c1">//3. createSlice</span>
+<span class="k">import</span> <span class="nx">createAction</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./createAction</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">createReducer</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./createReducer</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">createSlice</span><span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">initialState</span><span class="p">,</span> <span class="nx">reducers</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">slice</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">actions</span><span class="p">:</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">reducers</span><span class="p">).</span><span class="nx">reduce</span><span class="p">(</span>
+      <span class="p">(</span><span class="nx">actions</span><span class="p">,</span> <span class="nx">reducerPath</span><span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="p">(</span><span class="nx">actions</span><span class="p">[</span><span class="nx">reducerPath</span><span class="p">]</span> <span class="o">=</span> <span class="nx">createAction</span><span class="p">(</span><span class="nx">reducerPath</span><span class="p">)),</span>
+      <span class="p">{}</span>
+    <span class="p">),</span>
+    <span class="na">reducer</span><span class="p">:</span> <span class="nx">createReducer</span><span class="p">({</span> <span class="p">[</span><span class="nx">name</span><span class="p">]:</span> <span class="nx">initialState</span> <span class="p">},</span> <span class="nx">reducers</span><span class="p">),</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="nx">slice</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createSlice</span><span class="p">;</span>
+</pre></table></code></div></div><div class="table-wrapper"><table><thead><tr><th>메서드<th>설명<tbody><tr><td><code class="language-plaintext highlighter-rouge">createActions()</code><td>action type, action creator를 간편하게 생성한다.<tr><td><code class="language-plaintext highlighter-rouge">createReducer()</code><td>initialState, reducer를 간편하게 생성한다. <br />immer라이브러리를 사용해서 mutation이 가능하다.<tr><td><code class="language-plaintext highlighter-rouge">createSlice()</code><td>action type, action creator, initialState, reducer를 간편하게 생성한다. <br />immer라이브러리를 사용해서 mutation이 가능하다. <br />actions와 reducer가 있는 객체를 반환한다.</table></div><p><br /></p><h3 id="3-시작하기"><span class="mr-2">3) 시작하기</span><a href="#3-시작하기" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nv">$ </span>npm <span class="nb">install</span> @reduxjs/toolkit
+
+<span class="c"># 리덕스 툴킷에 이미 리덕스가 설치되어 있다. </span>
+<span class="nv">$ </span>npm uninstall redux
+</pre></table></code></div></div><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre><td class="rouge-code"><pre><span class="c1">// src/store/index.js</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createSlice</span><span class="p">,</span> <span class="nx">configureStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@reduxjs/toolkit</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">initialCounterState</span> <span class="o">=</span> <span class="p">{</span> <span class="na">counter</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">showCounter</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span>
+
+<span class="c1">// slice는 식별하기 위한 이름과 초기 상태, 리듀서가 필요하다.</span>
+<span class="kd">const</span> <span class="nx">counterSlice</span> <span class="o">=</span> <span class="nx">createSlice</span><span class="p">({</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">counter</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">initialState</span><span class="p">:</span> <span class="nx">initialCounterState</span><span class="p">,</span>
+  <span class="na">reducers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nx">increase</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 여전히 기존 상태를 변경할 수 없다. </span>
+      <span class="c1">// redux는 immer라는 패키지를 사용하는데, 이런 코드를 감지하고 자동으로 원래 상태를 복제하여 새로운 상태 객체를 생성하여 오버라이드한다. </span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">=</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">toggleCounter</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">showCounter</span> <span class="o">=</span> <span class="o">!</span><span class="nx">state</span><span class="p">.</span><span class="nx">showCounter</span><span class="p">;</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="c1">// reducer를 store와 연결한다. </span>
+<span class="c1">// key로 reducer를 매핑한다.</span>
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">configureStore</span><span class="p">({</span>
+  <span class="na">reducer</span><span class="p">:</span> <span class="p">{</span><span class="na">counter</span><span class="p">:</span> <span class="nx">counterSlice</span><span class="p">.</span><span class="nx">reducer</span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// 액션을 export (오타 방지)</span>
+<span class="c1">// dispatch(actionCreator(payload))를 위해 export!</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">counterActions</span> <span class="o">=</span> <span class="nx">counterSlice</span><span class="p">.</span><span class="nx">actions</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">store</span><span class="p">;</span>
+</pre></table></code></div></div><ul><li><code class="language-plaintext highlighter-rouge">createSlice({name: 이름, initialState: 초기값, reducer:{리듀서}})</code><ul><li>Reducer를 조각낸다.<li>initialState, reducer, action type, action creators를 한 번에 관리할 수 있도록 도와주는 함수이다.<li>Reducer에 정의된 여기 이 메서드를 호출하면, Action 객체가 생성된다.</ul><li>여러 개의 Reducer를 생성하여 기능 별로 관리하고 이를 Store와 연결한다.<li>이외에도 createAction, createReducer함수가 있지만 createSlice로 통합해서 관리하는 것이 편하다.</ul><p><br /></p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre><td class="rouge-code"><pre><span class="c1">// src/components/counter.js</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">useSelector</span><span class="p">,</span> <span class="nx">useDispatch</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">counterActions</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../store/index</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Counter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">dispatch</span> <span class="o">=</span> <span class="nx">useDispatch</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nx">useSelector</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span><span class="p">.</span><span class="nx">counter</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">show</span> <span class="o">=</span> <span class="nx">useSelector</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span><span class="p">.</span><span class="nx">showCounter</span><span class="p">);</span>
+
+
+  <span class="kd">const</span> <span class="nx">increaseHandler</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// increase()는 액션 객체를 자동으로 생성한다.</span>
+    <span class="c1">// payload가 필요할 경우 인자로 넣으면 이를 참고하여 자동으로 액션 객체를 생성한다. </span>
+    <span class="nx">dispatch</span><span class="p">(</span><span class="nx">counterActions</span><span class="p">.</span><span class="nx">increase</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span> <span class="c1">// { type: SOME_UNIQUE_IDENTIFIER, payload: 10 }</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">toggleCounterHandler</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">dispatch</span><span class="p">(</span><span class="nx">counterActions</span><span class="p">.</span><span class="nx">toggleCounter</span><span class="p">());</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="nx">show</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">counter</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">}</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">increaseHandler</span><span class="si">}</span><span class="p">&gt;</span>Increment<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">toggleCounterHandler</span><span class="si">}</span><span class="p">&gt;</span>Toggle Counter<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">Counter</span><span class="p">;</span>
+</pre></table></code></div></div><p><br /></p><h3 id="2-기능별로-파일-분할"><span class="mr-2">2) 기능별로 파일 분할</span><a href="#2-기능별로-파일-분할" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><blockquote class="prompt-tip"><div><p>기능에 따라 Slice를 분할하고 파일도 나눌 수 있다.</p><p>이렇게 할 경우, index.js에서 이들을 합쳐서 Store와 연결한다.</p></div></blockquote><p>vuex와 마찬가지로 Redux도 기능에 따라 파일을 나눠서 관리하는 것이 편리하다. 파일마다 각자 집중하고 있는 것이 다르기때문에, 한 눈에 코드를 파악하기도 쉽다.</p><p><br /></p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="c1">// src/store.index.js</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">configureStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@reduxjs/toolkit</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="nx">counterReducer</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./counter</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">authReducer</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./auth</span><span class="dl">'</span><span class="p">;</span>
+
+
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">configureStore</span><span class="p">({</span>
+  <span class="na">reducer</span><span class="p">:</span> <span class="p">{</span> <span class="na">counter</span><span class="p">:</span> <span class="nx">counterReducer</span><span class="p">,</span> <span class="na">auth</span><span class="p">:</span> <span class="nx">authReducer</span> <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">store</span><span class="p">;</span>
+
+<span class="c1">//===============================================================</span>
+<span class="c1">// configureStore</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">combineReducers</span><span class="p">,</span> <span class="nx">createStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">redux</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">devToolsEnhancer</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@redux-devtools/extension</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">configureStore</span><span class="p">({</span> <span class="nx">reducer</span><span class="p">,</span> <span class="nx">preloadedState</span><span class="p">,</span> <span class="nx">devTools</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">rootReducer</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">reducer</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">rootReducer</span> <span class="o">=</span> <span class="nx">reducer</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">reducer</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">reducer</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">reducer</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">rootReducer</span> <span class="o">=</span> <span class="nx">combineReducers</span><span class="p">(</span><span class="nx">reducer</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">enhancer</span> <span class="o">=</span> <span class="nx">devTools</span> <span class="p">?</span> <span class="nx">devToolsEnhancer</span><span class="p">()</span> <span class="p">:</span> <span class="kc">undefined</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">createStore</span><span class="p">(</span><span class="nx">rootReducer</span><span class="p">,</span> <span class="nx">preloadedState</span><span class="p">,</span> <span class="nx">enhancer</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">configureStore</span><span class="p">;</span>
+</pre></table></code></div></div><ul><li>index.js에서는 메인 스토어를 만드는데 집중한다.<li>createStore, combineReducers가 없이 Reducer를 결합하고 Store를 생성할 수 있다.<li>Redux 미들웨어 추가도 손쉬워졌다.</ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/web/'>WEB</a>, <a href='/categories/react/'>React</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/react/" class="post-tag no-text-decoration" >React</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=08-Redux%EC%99%80-RTK+-+Hello%2C+World%21&url=https%3A%2F%2Fjaekp.github.io%2Fposts%2Freact08%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=08-Redux%EC%99%80-RTK+-+Hello%2C+World%21&u=https%3A%2F%2Fjaekp.github.io%2Fposts%2Freact08%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Fjaekp.github.io%2Fposts%2Freact08%2F&text=08-Redux%EC%99%80-RTK+-+Hello%2C+World%21" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/mogodb01/">MongoDB-환경설정과-간단한-CRUD구현하기</a><li><a href="/posts/performance03/">실전-웹-성능-최적화-(feat. React)-Part2</a><li><a href="/posts/performance01/">실전-웹-성능-최적화-(feat. React)-Part1</a><li><a href="/posts/nft03/">03-Solidity-문법-기초</a><li><a href="/posts/nft04/">03-DApp-web3를-이용하여-이더리움과-상호작용하기</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/til/">til</a> <a class="post-tag" href="/tags/algorithm/">algorithm</a> <a class="post-tag" href="/tags/vue/">vue</a> <a class="post-tag" href="/tags/cs/">cs</a> <a class="post-tag" href="/tags/django/">django</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/css/">css</a> <a class="post-tag" href="/tags/react/">React</a> <a class="post-tag" href="/tags/moviewiki/">MovieWiki</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="tail-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/react00/"><div class="card-body"> <em class="timeago small" data-ts="1661698800" > 2022-08-29 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>React-특징</h3><div class="text-muted small"><p> 공식 문서 1. 선언형 프로그래밍 명령형 (HOW) 선언형 (WHAT) DOM 스크립트 기반 React, Vue 어딘가를 가야할 때 일일이 다 서술 해야 한다. 목적지만 말하면 된다. 즉, ...</p></div></div></a></div><div class="card"> <a href="/posts/react01/"><div class="card-body"> <em class="timeago small" data-ts="1661698800" > 2022-08-29 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>01-상태관리를-통한-동적인-페이지-구현</h3><div class="text-muted small"><p> 강의 링크 state를 활용한 동적 페이지 상태를 선언한다. 리액트의 이벤트와 바인드 한다. 모델이 변경됨을 감지한 후, 변경된 부분만 DOM에 반영한다. ## 1. Event // 컴포넌트: 자바스크립트 함수일 뿐이다. import &quot;./ExpenseItem.css&quot;; import ExpenseDate from &quot;./Exp...</p></div></div></a></div><div class="card"> <a href="/posts/react02/"><div class="card-body"> <em class="timeago small" data-ts="1661785200" > 2022-08-30 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>02-컴포넌트-리스트-및-조건부-렌더링</h3><div class="text-muted small"><p> 강의 링크 반복 렌더링 공식문서 / 조건부 렌더링 공식문서 1. 반복 렌더링 1) map메서드를 활용하여 반복 렌더링 하기 이전 코드 import ExpenseItem from &quot;./ExpenseItem&quot;; import Card from &quot;./Card&quot;; function Expenses({ expenses }) { return (...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/react06/" class="btn btn-outline-primary" prompt="Older"><p>06-React.memo를-사용하여-성능-최적화-하기</p></a> <a href="/posts/react09/" class="btn btn-outline-primary" prompt="Newer"><p>09-Redux를-활용한-비동기-요청</p></a></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center text-muted"><div class="footer-left"><p class="mb-0"> © 2023 <a href="https://github.com/JaeKP">박재경</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/til/">til</a> <a class="post-tag" href="/tags/algorithm/">algorithm</a> <a class="post-tag" href="/tags/vue/">vue</a> <a class="post-tag" href="/tags/cs/">cs</a> <a class="post-tag" href="/tags/django/">django</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/css/">css</a> <a class="post-tag" href="/tags/react/">React</a> <a class="post-tag" href="/tags/moviewiki/">MovieWiki</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/ko.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script>

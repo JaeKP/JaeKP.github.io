@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="ko" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.3.2" /><meta property="og:title" content="22/05/03/화 JavaScript Ajax 실습, 스터디 프로젝트" /><meta name="author" content="박재경" /><meta property="og:locale" content="ko" /><meta name="description" content="220503 Today I learned!" /><meta property="og:description" content="220503 Today I learned!" /><link rel="canonical" href="https://jaekp.github.io/posts/220503til/" /><meta property="og:url" content="https://jaekp.github.io/posts/220503til/" /><meta property="og:site_name" content="Hello, World!" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-05-03T00:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="22/05/03/화 JavaScript Ajax 실습, 스터디 프로젝트" /><meta name="google-site-verification" content="LP7vGYSUszERSVMH1MoT4NXRTCcbUaUtfFm_pOYcoQ4" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박재경"},"dateModified":"2022-06-08T18:03:35+09:00","datePublished":"2022-05-03T00:00:00+09:00","description":"220503 Today I learned!","headline":"22/05/03/화 JavaScript Ajax 실습, 스터디 프로젝트","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaekp.github.io/posts/220503til/"},"url":"https://jaekp.github.io/posts/220503til/"}</script><title>22/05/03/화 JavaScript Ajax 실습, 스터디 프로젝트 | Hello, World!</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Hello, World!"><meta name="application-name" content="Hello, World!"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/mococo.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Hello, World!</a></div><div class="site-subtitle font-italic">난 재경쓰!</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/JaeKP" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['jkp71192','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>22/05/03/화 JavaScript Ajax 실습, 스터디 프로젝트</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>22/05/03/화 JavaScript Ajax 실습, 스터디 프로젝트</h1><div class="post-meta text-muted"><div> By <em> 박재경 </em></div><div class="d-flex"><div> <span> Posted <em class="timeago" data-ts="1651503600" data-toggle="tooltip" data-placement="bottom" data-tooltip-df="llll" > 2022-05-03 </em> </span> <span> Updated <em class="timeago" data-ts="1654679015" data-toggle="tooltip" data-placement="bottom" data-tooltip-df="llll" > 2022-06-08 </em> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2186 words"> <em>12 min</em> read</span></div></div></div><div class="post-content"><h1 id="220503-today-i-learned">220503 Today I learned!</h1><ul class="task-list"><li class="task-list-item" hide-bullet><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />JavaScript Ajax 실습<li class="task-list-item" hide-bullet><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />스터디 프로젝트<li class="task-list-item" hide-bullet><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 문제 풀이</ul><hr /><h2 id="1-fact"><span class="mr-2">1. Fact</span><a href="#1-fact" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><h3 id="1-javascript-ajax"><span class="mr-2">(1) JavaScript Ajax</span><a href="#1-javascript-ajax" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><blockquote><p>Ajax를 통해 DJango에서 비동기 처리하는 것을 구현</p></blockquote><ul><li>좋아요와 팔로우 AJAX 요청으로 처리한다.<ul><li>로그인 사용자가 좋아요 or 팔로우 버튼을 누름에 따라 버튼이 바뀐다.<li>실시간으로 좋아요 수, 팔로워 수 , 팔로잉 수가 반영된다.<li>새로고침 없이 발생해야 한다.</ul></ul><ol><li><p><strong>서버로 요청을 보내고 <code class="language-plaintext highlighter-rouge">AJAX </code></strong></p><ul><li><p>요청하는 url</p><li><p>method</p><li><p>csrf</p></ul><li><p><strong>서버에서는 요청에 맞는 JSON 응답한다 <code class="language-plaintext highlighter-rouge">views.py</code></strong></p><ul><li>요청에 맞는 데이터<li>JsonResponse</ul><li><p><strong>받은 응답을 DOM에 반영한다. <code class="language-plaintext highlighter-rouge">JS</code></strong></p><ul><li><code class="language-plaintext highlighter-rouge">.then()</code><li>태그 생성 및 속성 변경</ul></ol><ul><li><a href="https://github.com/JaeKP/Study/blob/master/web/JS/JavaScript_Ajax.md">정리본</a></ul><p><br /></p><h3 id="2-스터디-프로젝트"><span class="mr-2">(2) 스터디 프로젝트</span><a href="#2-스터디-프로젝트" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><blockquote><p>코드 간소화</p></blockquote><ul><li>소모 칼로리를 표현하는 칼로리바를 반복문을 사용하여 코드를 간소화했다.<ul><li>Array.map을 활용해 컴포넌트를 render 했다. (자세한 내용은 Finding에 정리했다.)</ul><li>코드 재사용성을 높이기 위해 Card컴포넌트에 있는 함수를 상위 컴포넌트로 이동시켰다. 그리고 해당 함수를 props로 넘겨받았다.</ul><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre> <span class="kd">const</span> <span class="nx">deleteData</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">newData</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">d</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">d</span><span class="p">.</span><span class="nx">id</span> <span class="o">!==</span> <span class="nx">num</span><span class="p">);</span>
+    <span class="nx">setData</span><span class="p">(</span><span class="nx">newData</span><span class="p">);</span>
+  <span class="p">};</span>
+</pre></table></code></div></div><p>위의 코드를 App.js로 이동했다. 만약 다른 컴포넌트에서 데이터를 삭제할 일이 있다면 해당 함수를 props로 전달하여 코드를 재사용하기 위함이다.</p><p><br /></p><ul><li>데이터 pk(id) 설정하는 방법을 조금 수정했다.</ul><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="c1">// 처음 코드</span>
+<span class="c1">// 새로고침하면 id가 0으로 리셋이 되기 때문에 새로고침 후 생성한 데이터의 pk가 겹친다. </span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">index</span><span class="p">,</span> <span class="nx">setIndex</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 이전 코드 </span>
+<span class="c1">// 데이터를 중간에서 삭제하면 데이터의 길이가 줄어들기 때문에 마지막 id와 새로 생성한 id가 겹친다.</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">index</span><span class="p">,</span> <span class="nx">setIndex</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+
+<span class="c1">// 현재 코드</span>
+<span class="c1">// 가장 마지막에 있는 데이터의 id에 +1을 하기 때문에 중간에 데이터를 삭제해도 id가 겹치지 않는다. </span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">index</span><span class="p">,</span> <span class="nx">setIndex</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="nx">id</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">||</span> <span class="mi">1</span><span class="p">)</span>
+</pre></table></code></div></div><p><br /></p><h3 id="3-백준-문제-풀이"><span class="mr-2">(3) 백준 문제 풀이</span><a href="#3-백준-문제-풀이" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><ul><li>2579 계단 오르기<li><a href="https://github.com/JaeKP/Study/tree/master/algorithm/1%EC%9D%BC1%EC%95%8C%EA%B3%A0/05%EC%9B%94/0503">문제풀이</a><li>DP 바텀업 방식<ul><li>연속 3개의 계단을 밟으면 안된다는 조건이 까다로웠다.<li>단순 재귀방법에서는 밟는 계단의 수를 카운트하면 되었지만, 바텀업에서는 이런 방식을 적용할 수 없다고 판단했다.<li>그래서 조건에 맞는 기저사례를 만들고 바텀업방식으로 풀었다.<li>그런데 풀고 보니 계단의 수가 300개 였기때문에 간편하게 탑다운 방식으로 풀어도 괜찮지 않았을까라는 생각이 들었다. (아님말구..)</ul></ul><p><br /></p><h2 id="2-feeling"><span class="mr-2">2. Feeling</span><a href="#2-feeling" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><p>역시 프로젝트는 재밌다. 혼자서 고민하고 해결하는 재미가 있는 것 같다. 하지만 내 코드가 과연 좋은 코드인지에 대한 의문이 계속 든다. 과연 좋은 코드는 무엇이고 어떻게 구현을 해야 하는 걸까. 참 어렵다. 이건 내가 리액트에 대한 지식이 부족하기 때문인 것같다. 왜 리액트에서는 함수형 컴포넌트를 쓰고, 컴포넌트를 나눠서 개발하고 , Hook은 어떻게 쓰고 리액트은 어떤 점이 좋은지에 대해 잘 모르겠다. 그래서 프로젝트 이후 이에 대해서 학습하는 시간을 갖고 싶다. 😊</p><p><br /></p><h2 id="3-finding"><span class="mr-2">3. Finding</span><a href="#3-finding" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><blockquote class="prompt-info"><div><p>반복랜더링은 return이 있어야 한다! ㄴo0oㄱ (너무 당연한건데.. 생각을 못했다… 👀)</p></div></blockquote><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+</pre><td class="rouge-code"><pre> <span class="cm">/* component/card.js (수정 전 코드) */</span>
+<span class="kd">function</span> <span class="nx">Card</span><span class="p">({</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">deleteData</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+         <span class="cm">/* 생략... */</span>
+        <span class="p">{</span><span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">&lt;=</span> <span class="mi">50</span> <span class="p">?</span> <span class="p">(</span>
+         <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+             <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+             <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+             <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+             <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+             <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+             <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+         <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+         <span class="p">)</span> <span class="p">:</span> <span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="p">?</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">&lt;=</span> <span class="mi">150</span> <span class="p">?</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">&lt;=</span> <span class="mi">200</span> <span class="p">?</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">&lt;=</span> <span class="mi">250</span> <span class="p">?</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarGrey</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+    <span class="p">)</span> <span class="p">:</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nc">StyledExpBarRed</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+    <span class="p">)}</span> 
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span> <span class="p">/&gt;</span>
+ <span class="cm">/* 생략... */</span>
+	<span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>위의 코드는 사용자가 입력한 칼로리를 각 조건에 따라 어떻게 표현되는지 보여준다. (6칸으로 되어있는 경험치바로 50, 100, 150… 단위로 빨간색 칸이 증가한다. 예를 들어, 200kal를 소모했다면 빨간색 칸 4개 회색칸 2개로 구성된 경험치 바를 랜더링한다.</p><p>처음에는 단순하게 조건부 랜더링을 했다. 하지만 작성하면서도 이 코드는 나중에 수정을 해야겠다 마음을 먹었고 어떻게 반복랜더링을 할 수 있을지 고민해 보았다.</p><p><br /></p><h4 id="1-우선-칼로리-데이터에-접근을-해볼까"><span class="mr-2">1) 우선 칼로리 데이터에 접근을 해볼까?</span><a href="#1-우선-칼로리-데이터에-접근을-해볼까" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">dataCalories</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">calories</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dataCalories</span><span class="p">);</span>
+</pre></table></code></div></div><p><br /></p><h4 id="2-아--데이터의-id가-있어야-하네"><span class="mr-2">2) 아 ! 데이터의 id가 있어야 하네!</span><a href="#2-아--데이터의-id가-있어야-하네" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>id에 접근하기 위해서는 결국 template에서 가져와야 했다. 그래서 script구간에서 미리 함수를 만들어놓고 랜더링을 해봤다.</p><p>데이터의 칼로리를 인자로 전달하여 함수를 template에서 실행 하면 되지 않을까… 라고 생각을 했었다. 🙄</p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">Card</span><span class="p">({</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">deleteData</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">expBar</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">redStart</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">greyStart</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="c1">// 경험치바는 최대 6칸이기 때문에 6보다 큰수가 오면 6칸으로 처리한다. </span>
+        <span class="kd">const</span> <span class="nx">red</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="mi">6</span> <span class="p">?</span> <span class="mi">6</span> <span class="p">:</span> <span class="nx">num</span><span class="p">;</span>
+        <span class="kd">const</span> <span class="nx">grey</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">-</span> <span class="nx">red</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nx">redStart</span> <span class="o">&lt;</span> <span class="nx">red</span><span class="p">)</span> <span class="p">{</span>
+            <span class="o">&lt;</span><span class="nx">StyledExpBarRed</span> <span class="o">/&gt;</span>
+            <span class="nx">redStart</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">greyStart</span> <span class="o">&lt;</span> <span class="nx">grey</span><span class="p">)</span> <span class="p">{</span>
+            <span class="o">&lt;</span><span class="nx">StyledExpBarGrey</span> <span class="o">/&gt;</span>
+            <span class="nx">greyStart</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+	<span class="k">return</span> <span class="p">(</span>
+    <span class="cm">/* 생략... 
+    칼로리를 50으로 나눈 값을 인자로 넘긴다.(Math.floor()를 통해 소숫점은 버린다. ) */</span>
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+            <span class="si">{</span><span class="nx">expBar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">/</span> <span class="mi">50</span><span class="p">))</span><span class="si">}</span>
+        <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+    <span class="p">)</span>
+</pre></table></code></div></div><p><br /></p><h4 id="3-오류는-발생하지-않지만-컴포넌트가-보이지-않았다"><span class="mr-2">3) 오류는 발생하지 않지만 컴포넌트가 보이지 않았다.</span><a href="#3-오류는-발생하지-않지만-컴포넌트가-보이지-않았다" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p><strong>생각해보니 당연한 이유였다. return이 없기 때문이다. (머쓱타드)</strong></p><p>처음에 localStorage에 있던 데이터 배열을 map 메서드로 카드 컴포넌트를 만든 것은 별 생각 없이 만들었다. 지금와서 생각해보니 반복할때마다 return을 해주기때문에 카드 컴포넌트를 생성할 수 있었던 것이다!</p><p>이를 위해서는 경험치를 표현하는 배열을 만들어야 했다.</p><ol><li>예를 들어 ‘200kal만큼 운동을 했다’라고 가정하면, 빨간색칸은 4칸 회색 칸은 2칸이여야 한다.<li><code class="language-plaintext highlighter-rouge">red = [0, 0, 0, 0] , grey = [0, 0]</code>과 같이 만든다.<li>template부분에서 map을 통해 해당 배열의 길이만큼 컴포넌트를 생성하는 것이다.</ol><p>이것이 깔끔한 방법인지는 모르겠지만, 내가 아는 반복 랜더링 방법은 map 뿐이였기 때문에 배열을 만들 수 밖에 없었다.</p><div class="language-react highlighter-rouge"><div class="code-header"> <span data-label-text="React"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">Card</span><span class="p">({</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">deleteData</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">greyExp</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">red</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="mi">6</span> <span class="p">?</span> <span class="mi">6</span> <span class="p">:</span> <span class="nx">num</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">grey</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">-</span> <span class="nx">red</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">greyArray</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">grey</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// [0, 0, 0, 0]</span>
+    <span class="k">return</span> <span class="nx">greyArray</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">redExp</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">red</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="mi">6</span> <span class="p">?</span> <span class="mi">6</span> <span class="p">:</span> <span class="nx">num</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">redArray</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">red</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// [0, 0]</span>
+    <span class="k">return</span> <span class="nx">redArray</span><span class="p">;</span>
+  <span class="p">};</span>
+	<span class="k">return</span> <span class="p">(</span>
+    <span class="cm">/* 생략... 
+    칼로리를 50으로 나눈 값을 인자로 넘긴다.(Math.floor()를 통해 소숫점은 버린다. ) 
+    key는 해당 데이터의 `id-칼로리바색-index`로 구성했다. */</span>
+        <span class="p">&lt;</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+            <span class="si">{</span><span class="nx">redExp</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">/</span> <span class="mi">50</span><span class="p">)).</span><span class="nx">map</span><span class="p">(</span>
+                    <span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="k">return</span> <span class="p">(&lt;</span><span class="nc">StyledExpBarRedkey</span><span class="p">=</span><span class="si">{</span><span class="s2">`</span><span class="p">${</span><span class="nx">detailData</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">-red-</span><span class="p">${</span><span class="nx">index</span><span class="p">}</span><span class="s2">`</span><span class="si">}</span><span class="p">/&gt;);</span>
+                    <span class="p">}</span>
+                  <span class="p">)</span><span class="si">}</span>
+            <span class="si">{</span><span class="nx">greyExp</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">detailData</span><span class="p">.</span><span class="nx">calories</span> <span class="o">/</span> <span class="mi">50</span><span class="p">)).</span><span class="nx">map</span><span class="p">(</span>
+                    <span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="k">return</span> <span class="p">(&lt;</span><span class="nc">StyledExpBarGreykey</span><span class="p">=</span><span class="si">{</span><span class="s2">`</span><span class="p">${</span><span class="nx">detailData</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">-grey-</span><span class="p">${</span><span class="nx">index</span><span class="p">}</span><span class="s2">`</span><span class="si">}</span><span class="p">/&gt;);</span>
+                    <span class="p">}</span>
+                  <span class="p">)</span><span class="si">}</span>
+        <span class="p">&lt;/</span><span class="nc">StyledCircleContainer</span><span class="p">&gt;</span>
+    <span class="p">)</span>
+</pre></table></code></div></div><p><br /></p><h2 id="4-future-action--feedback"><span class="mr-2">4. Future Action &amp; Feedback</span><a href="#4-future-action--feedback" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><div class="table-wrapper"><table><thead><tr><th>Future Action<th>진행 상황<th>Feedback<tbody><tr><td>DOM을 깨우치다<td><code class="language-plaintext highlighter-rouge">pause 🤦‍♀️</code><td>잠시 중단!<tr><td>1일 1알고! 🔥<td><code class="language-plaintext highlighter-rouge">in progress 🚀</code><td> <tr><td>why 리액트?<td><code class="language-plaintext highlighter-rouge">Not Start🌙</code><td> </table></div><p><br /></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/til-2022/'>TIL/2022</a>, <a href='/categories/05/'>05</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/til/" class="post-tag no-text-decoration" >til</a> <a href="/tags/javascript/" class="post-tag no-text-decoration" >javascript</a> <a href="/tags/axios/" class="post-tag no-text-decoration" >axios</a> <a href="/tags/react/" class="post-tag no-text-decoration" >react</a> <a href="/tags/algorithm/" class="post-tag no-text-decoration" >algorithm</a> <a href="/tags/project/" class="post-tag no-text-decoration" >project</a> <a href="/tags/wazabyo/" class="post-tag no-text-decoration" >WaZaByo</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=22%2F05%2F03%2F%ED%99%94+JavaScript+Ajax+%EC%8B%A4%EC%8A%B5%2C+%EC%8A%A4%ED%84%B0%EB%94%94+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+-+Hello%2C+World%21&url=https%3A%2F%2Fjaekp.github.io%2Fposts%2F220503til%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=22%2F05%2F03%2F%ED%99%94+JavaScript+Ajax+%EC%8B%A4%EC%8A%B5%2C+%EC%8A%A4%ED%84%B0%EB%94%94+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+-+Hello%2C+World%21&u=https%3A%2F%2Fjaekp.github.io%2Fposts%2F220503til%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Fjaekp.github.io%2Fposts%2F220503til%2F&text=22%2F05%2F03%2F%ED%99%94+JavaScript+Ajax+%EC%8B%A4%EC%8A%B5%2C+%EC%8A%A4%ED%84%B0%EB%94%94+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+-+Hello%2C+World%21" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/mogodb01/">MongoDB-환경설정과-간단한-CRUD구현하기</a><li><a href="/posts/performance03/">실전-웹-성능-최적화-(feat. React)-Part2</a><li><a href="/posts/performance01/">실전-웹-성능-최적화-(feat. React)-Part1</a><li><a href="/posts/nft03/">03-Solidity-문법-기초</a><li><a href="/posts/nft04/">03-DApp-web3를-이용하여-이더리움과-상호작용하기</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/til/">til</a> <a class="post-tag" href="/tags/algorithm/">algorithm</a> <a class="post-tag" href="/tags/vue/">vue</a> <a class="post-tag" href="/tags/cs/">cs</a> <a class="post-tag" href="/tags/django/">django</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/css/">css</a> <a class="post-tag" href="/tags/react/">React</a> <a class="post-tag" href="/tags/moviewiki/">MovieWiki</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="tail-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/220429til/"><div class="card-body"> <em class="timeago small" data-ts="1651158000" > 2022-04-29 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>22/04/29/금 스터디 프로젝트 중간 발표</h3><div class="text-muted small"><p> 220429 Today I learned! 스터디 프로젝트 스터디 프로젝트 발표 백준 문제 풀이 1. Fact (1) 스터디 프로젝트 로컬스토리지를 연동했다. 처음에는 컴포넌트에서 로컬 스토리지를 저장했는데, 그러면 다른 컴포넌트에 전달하기 어렵다는 사실을 알게 되었다. 그래서 로컬스토리지를...</p></div></div></a></div><div class="card"> <a href="/posts/220505til/"><div class="card-body"> <em class="timeago small" data-ts="1651676400" > 2022-05-05 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>22/05/05/목 Vue.js 복습, 스터디 프로젝트 마무리</h3><div class="text-muted small"><p> 220505 Today I learned! Vue.js 복습 스터디 프로젝트 마무리 백준 문제 풀이 1. Fact (1)Vue.js 복습 Vue 공식문서와 교재를 읽으며 복습 Vue 기초 문법을 추가 정리했다. Vue instance의 option template 문법 ...</p></div></div></a></div><div class="card"> <a href="/posts/220427til/"><div class="card-body"> <em class="timeago small" data-ts="1650985200" > 2022-04-27 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>22/04/27/수 JavaScript심화, 스터디 프로젝트</h3><div class="text-muted small"><p> 220427 Today I learned! JavaScript 심화 스터디 프로젝트 백준 문제 풀이 1. Fact (1) JavaScript 심화 DOM의 객체를 선택하고 변경하는 일련의 과정과 이벤트에 대해 학습했다. select (선택) 변화를 줄 객체를 선택한다. manipu...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/220502til/" class="btn btn-outline-primary" prompt="Older"><p>22/05/02/월 JavaScript Ajax</p></a> <a href="/posts/220504til/" class="btn btn-outline-primary" prompt="Newer"><p>22/05/04/수 Vue.js 기초</p></a></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center text-muted"><div class="footer-left"><p class="mb-0"> © 2023 <a href="https://github.com/JaeKP">박재경</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/til/">til</a> <a class="post-tag" href="/tags/algorithm/">algorithm</a> <a class="post-tag" href="/tags/vue/">vue</a> <a class="post-tag" href="/tags/cs/">cs</a> <a class="post-tag" href="/tags/django/">django</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/javascript/">javascript</a> <a class="post-tag" href="/tags/css/">css</a> <a class="post-tag" href="/tags/react/">React</a> <a class="post-tag" href="/tags/moviewiki/">MovieWiki</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/ko.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script>
